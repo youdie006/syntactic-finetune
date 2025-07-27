@@ -1,0 +1,66 @@
+# Baseline Strategy - 현재 사용중인 기본 분류
+# 원본 태그를 그대로 사용하는 기준선 버전
+
+name: "baseline"
+version: "v1.0"
+description: "Current baseline tag classification - uses original categories as-is"
+created_date: "2025-01-28"
+
+# 태그 분류 전략
+strategy_type: "original"
+
+# 태그 매핑 규칙
+tag_mapping:
+  # 카테고리별 그룹핑 (현재 상태 유지)
+  syntax_groups:
+    verb_tense:
+      - "동사_시제"
+    verb_voice:
+      - "동사_태"
+    preposition:
+      - "전치사"
+    conjunction:
+      - "접속사"
+    participle:
+      - "준동사"
+    sentence_structure:
+      - "구문"
+      - "문장형식"
+    auxiliary:
+      - "조동사"
+    phrasal_verb:
+      - "구동사, 관용어"
+    relative:
+      - "관계사"
+    noun:
+      - "명사"
+    comparison:
+      - "비교구문"
+    negation:
+      - "부정"
+    interrogative:
+      - "의문사"
+    connector:
+      - "연결어"
+    subjunctive:
+      - "가정법"
+    inversion:
+      - "도치"
+
+# 출력 형식
+output_format:
+  chunk_format: "[{category} {words}]"
+  role_format: "{category}:{tag}"
+  separator: " | "
+
+# 품질 설정
+quality_filters:
+  min_sentence_length: 10
+  max_sentence_length: 500
+  min_tags_per_sentence: 1
+  max_tags_per_sentence: 50
+
+# 통계 정보
+statistics:
+  total_categories: 17
+  most_frequent: ["전치사", "동사_시제", "접속사", "준동사", "구문"]

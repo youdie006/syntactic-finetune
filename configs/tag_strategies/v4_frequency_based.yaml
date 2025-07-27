@@ -1,0 +1,128 @@
+# Frequency-based Strategy - 빈도 기반 태그 분류
+# 빈도가 높은 태그는 세분화하고, 낮은 태그는 통합
+
+name: "frequency_based"
+version: "v4.0"
+description: "Frequency-based tag classification - detailed for common tags, merged for rare tags"
+created_date: "2025-01-28"
+
+# 태그 분류 전략
+strategy_type: "frequency_weighted"
+
+# 빈도 기반 분류 규칙
+frequency_thresholds:
+  high_frequency: 500   # 500회 이상 등장하는 태그들은 세분화
+  medium_frequency: 100 # 100-500회 등장하는 태그들은 유지
+  low_frequency: 20     # 20회 미만 등장하는 태그들은 통합
+
+# 태그 매핑 규칙
+tag_mapping:
+  syntax_groups:
+    # 고빈도 태그들 - 세분화 (전치사, 동사_시제, 접속사, 준동사, 구문)
+    prep_common:
+      patterns: ["전치사 in", "전치사 on", "전치사 to", "전치사 for", "전치사 of"]
+      original_category: "전치사"
+      frequency_level: "high"
+    
+    prep_directional:
+      patterns: ["전치사 from", "전치사 into", "전치사 onto", "전치사 through"]
+      original_category: "전치사"
+      frequency_level: "high"
+    
+    prep_temporal:
+      patterns: ["전치사 after", "전치사 before", "전치사 during", "전치사 since"]
+      original_category: "전치사"
+      frequency_level: "high"
+    
+    prep_other:
+      patterns: ["전치사 with", "전치사 by", "전치사 about", "전치사 under", "전치사 over"]
+      original_category: "전치사"
+      frequency_level: "high"
+    
+    verb_simple:
+      patterns: ["단순 현재", "단순 과거"]
+      original_category: "동사_시제"
+      frequency_level: "high"
+    
+    verb_complex:
+      patterns: ["현재완료", "과거완료", "현재진행", "과거진행"]
+      original_category: "동사_시제"
+      frequency_level: "high"
+    
+    conj_main:
+      patterns: ["등위접속사", "종속접속사"]
+      original_category: "접속사"
+      frequency_level: "high"
+    
+    # 중빈도 태그들 - 유지 (조동사, 문장형식, 관계사)
+    auxiliary:
+      patterns: ["조동사"]
+      frequency_level: "medium"
+    
+    sentence_form:
+      patterns: ["문장형식"]
+      frequency_level: "medium"
+    
+    relative:
+      patterns: ["관계사"]
+      frequency_level: "medium"
+    
+    verbal:
+      patterns: ["준동사"]
+      frequency_level: "medium"
+    
+    phrasal:
+      patterns: ["구동사, 관용어"]
+      frequency_level: "medium"
+    
+    structure:
+      patterns: ["구문"]
+      frequency_level: "medium"
+    
+    noun:
+      patterns: ["명사"]
+      frequency_level: "medium"
+    
+    comparison:
+      patterns: ["비교구문"]
+      frequency_level: "medium"
+    
+    voice:
+      patterns: ["동사_태"]
+      frequency_level: "medium"
+    
+    connector:
+      patterns: ["연결어"]
+      frequency_level: "medium"
+    
+    negation:
+      patterns: ["부정"]
+      frequency_level: "medium"
+    
+    # 저빈도 태그들 - 통합 (의문사, 가정법, 도치)
+    special_constructions:
+      patterns: ["의문사", "가정법", "도치"]
+      frequency_level: "low"
+
+# 출력 형식
+output_format:
+  chunk_format: "[{freq_category} {words}]"
+  role_format: "{freq_category}:{tag}"
+  separator: " | "
+  include_frequency_info: true
+
+# 품질 설정
+quality_filters:
+  min_sentence_length: 10
+  max_sentence_length: 500
+  min_tags_per_sentence: 1
+  max_tags_per_sentence: 50
+  balance_by_frequency: true
+
+# 통계 정보
+statistics:
+  total_categories: 19
+  high_freq_categories: 7
+  medium_freq_categories: 9
+  low_freq_categories: 1  # 통합된 special_constructions
+  target_distribution: "frequency_balanced"

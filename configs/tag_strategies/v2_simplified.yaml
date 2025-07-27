@@ -1,0 +1,73 @@
+# Simplified Strategy - 태그를 더 큰 그룹으로 통합
+# 파인튜닝이 더 쉽도록 카테고리 수를 줄인 버전
+
+name: "simplified"
+version: "v2.0"
+description: "Simplified tag classification - merges similar categories into broader groups"
+created_date: "2025-01-28"
+
+# 태그 분류 전략
+strategy_type: "merged"
+
+# 태그 매핑 규칙 - 17개 카테고리를 8개로 통합
+tag_mapping:
+  syntax_groups:
+    # 동사 관련 모든 것을 통합
+    verb:
+      - "동사_시제"
+      - "동사_태"
+      - "조동사"
+    
+    # 준동사와 관련 구문을 통합
+    verbal:
+      - "준동사"
+      - "구동사, 관용어"
+    
+    # 전치사 유지
+    preposition:
+      - "전치사"
+    
+    # 접속사와 연결어 통합
+    connector:
+      - "접속사"
+      - "연결어"
+      - "관계사"
+    
+    # 구문과 문장형식 통합
+    structure:
+      - "구문"
+      - "문장형식"
+      - "도치"
+    
+    # 명사 관련
+    noun:
+      - "명사"
+    
+    # 수식/비교 관련
+    modifier:
+      - "비교구문"
+      - "부정"
+    
+    # 의문/가정 관련
+    modal:
+      - "의문사"
+      - "가정법"
+
+# 출력 형식
+output_format:
+  chunk_format: "[{simplified_category} {words}]"
+  role_format: "{simplified_category}:{original_tag}"
+  separator: " | "
+
+# 품질 설정
+quality_filters:
+  min_sentence_length: 10
+  max_sentence_length: 500
+  min_tags_per_sentence: 1
+  max_tags_per_sentence: 50
+
+# 통계 정보
+statistics:
+  total_categories: 8
+  reduction_ratio: 0.53  # 17 -> 8 categories
+  target_distribution: "more_balanced"

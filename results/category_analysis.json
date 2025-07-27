@@ -1,0 +1,864 @@
+{
+  "total_sentences": 102081,
+  "total_tags": 668753,
+  "category_stats": [
+    {
+      "category": "전치사",
+      "count": 131447,
+      "percentage": 19.655537993848252,
+      "unique_tags": 83,
+      "top_tags": [
+        [
+          "전치사 of",
+          28178
+        ],
+        [
+          "전치사 in",
+          22218
+        ],
+        [
+          "전치사 to",
+          11145
+        ]
+      ],
+      "examples": [
+        {
+          "tag": "전치사 after",
+          "words": [
+            "after"
+          ],
+          "sentence": "This simple message has a content message that tells the trainee to see the supervisor after the meeting."
+        },
+        {
+          "tag": "전치사 by",
+          "words": [
+            "by"
+          ],
+          "sentence": "You can appreciate this most clearly if you visualize the same command being made by the trainee to the supervisor."
+        },
+        {
+          "tag": "전치사 to",
+          "words": [
+            "to"
+          ],
+          "sentence": "You can appreciate this most clearly if you visualize the same command being made by the trainee to the supervisor."
+        }
+      ]
+    },
+    {
+      "category": "동사_시제",
+      "count": 110928,
+      "percentage": 16.587290075708072,
+      "unique_tags": 39,
+      "top_tags": [
+        [
+          "단순 현재 — 3인칭 단수 주어",
+          32544
+        ],
+        [
+          "단순 과거 ",
+          31659
+        ],
+        [
+          "단순 현재",
+          31027
+        ]
+      ],
+      "examples": [
+        {
+          "tag": "단순 현재 — 3인칭 단수 주어",
+          "words": [
+            "has",
+            "tells"
+          ],
+          "sentence": "This simple message has a content message that tells the trainee to see the supervisor after the meeting."
+        },
+        {
+          "tag": "단순 현재",
+          "words": [
+            "visualize"
+          ],
+          "sentence": "You can appreciate this most clearly if you visualize the same command being made by the trainee to the supervisor."
+        },
+        {
+          "tag": "진행 수동 분사 형용사역할 — 명사수식",
+          "words": [
+            "being",
+            "made"
+          ],
+          "sentence": "You can appreciate this most clearly if you visualize the same command being made by the trainee to the supervisor."
+        }
+      ]
+    },
+    {
+      "category": "접속사",
+      "count": 79175,
+      "percentage": 11.839199226022163,
+      "unique_tags": 74,
+      "top_tags": [
+        [
+          "등위접속사 and",
+          30782
+        ],
+        [
+          "종속접속사 that 명사역할 — 목적어",
+          6896
+        ],
+        [
+          "등위접속사 or",
+          6263
+        ]
+      ],
+      "examples": [
+        {
+          "tag": "종속접속사 if 부사역할 — 조건",
+          "words": [
+            "if"
+          ],
+          "sentence": "You can appreciate this most clearly if you visualize the same command being made by the trainee to the supervisor."
+        },
+        {
+          "tag": "종속접속사 since 부사역할 — 이유",
+          "words": [
+            "since"
+          ],
+          "sentence": "They do, however, show great care for each other, since they view harmony as essential to relationship improvement."
+        },
+        {
+          "tag": "종속접속사 until[till] 부사역할 — 시간",
+          "words": [
+            "until"
+          ],
+          "sentence": "It wasn't until that minor detail was revealed─the world is round─that behaviors changed on a massive scale."
+        }
+      ]
+    },
+    {
+      "category": "준동사",
+      "count": 72777,
+      "percentage": 10.882493237413513,
+      "unique_tags": 85,
+      "top_tags": [
+        [
+          "to부정사의 목적어",
+          14478
+        ],
+        [
+          "동명사의 목적어",
+          7629
+        ],
+        [
+          "과거분사 형용사역할 — 명사수식",
+          6782
+        ]
+      ],
+      "examples": [
+        {
+          "tag": "to부정사의 목적어",
+          "words": [
+            "the",
+            "supervisor"
+          ],
+          "sentence": "This simple message has a content message that tells the trainee to see the supervisor after the meeting."
+        },
+        {
+          "tag": "원형부정사의 목적어",
+          "words": [
+            "our",
+            "food"
+          ],
+          "sentence": "Some live in our digestive systems and help us digest our food, and some live in the environment and produce oxygen so that we can breathe and live on Earth."
+        },
+        {
+          "tag": "to부정사의 목적어",
+          "words": [
+            "a",
+            "doctor",
+            "the",
+            "infection"
+          ],
+          "sentence": "This is when we need to see a doctor, who may prescribe medicines to control the infection."
+        }
+      ]
+    },
+    {
+      "category": "구문",
+      "count": 72763,
+      "percentage": 10.88039978886076,
+      "unique_tags": 195,
+      "top_tags": [
+        [
+          "n1 and n2 병렬",
+          10862
+        ],
+        [
+          "v1 and v2 병렬",
+          6867
+        ],
+        [
+          "s1 v1 and s2 v2 병렬 ",
+          3848
+        ]
+      ],
+      "examples": [
+        {
+          "tag": ", 삽입어구, - 연결어구",
+          "words": [
+            ",",
+            "however",
+            ","
+          ],
+          "sentence": "They do, however, show great care for each other, since they view harmony as essential to relationship improvement."
+        },
+        {
+          "tag": ", 삽입어구 - 부연설명",
+          "words": [
+            ",",
+            "since",
+            "they",
+            "view",
+            "harmony",
+            "as",
+            "essential",
+            "to",
+            "relationship",
+            "improvement"
+          ],
+          "sentence": "They do, however, show great care for each other, since they view harmony as essential to relationship improvement."
+        },
+        {
+          "tag": "it ~ that 강조구문",
+          "words": [
+            "It",
+            "that"
+          ],
+          "sentence": "It wasn't until that minor detail was revealed─the world is round─that behaviors changed on a massive scale."
+        }
+      ]
+    },
+    {
+      "category": "구동사, 관용어",
+      "count": 42326,
+      "percentage": 6.329093103133743,
+      "unique_tags": 791,
+      "top_tags": [
+        [
+          "by v-ing",
+          1588
+        ],
+        [
+          "such as",
+          1228
+        ],
+        [
+          "(and) then",
+          1169
+        ]
+      ],
+      "examples": [
+        {
+          "tag": "in general",
+          "words": [
+            "In",
+            "general"
+          ],
+          "sentence": "In general, Asians do not reach out to strangers."
+        },
+        {
+          "tag": "allow for",
+          "words": [
+            "allowed",
+            "for"
+          ],
+          "sentence": "New ideas, like mathematics, were shared between societies which allowed for all kinds of innovations and advancements."
+        },
+        {
+          "tag": "need to-v",
+          "words": [
+            "need",
+            "to",
+            "see"
+          ],
+          "sentence": "This is when we need to see a doctor, who may prescribe medicines to control the infection."
+        }
+      ]
+    },
+    {
+      "category": "문장형식",
+      "count": 31411,
+      "percentage": 4.6969508921829135,
+      "unique_tags": 22,
+      "top_tags": [
+        [
+          "be동사 + 형용사",
+          13437
+        ],
+        [
+          "there/here 구문",
+          3795
+        ],
+        [
+          "동사 + 목적어 + to-v보어",
+          2683
+        ]
+      ],
+      "examples": [
+        {
+          "tag": "동사 + 목적어 + to-v보어",
+          "words": [
+            "tells",
+            "the",
+            "trainee",
+            "to",
+            "see"
+          ],
+          "sentence": "This simple message has a content message that tells the trainee to see the supervisor after the meeting."
+        },
+        {
+          "tag": "be동사 + 형용사",
+          "words": [
+            "is",
+            "round"
+          ],
+          "sentence": "It wasn't until that minor detail was revealed─the world is round─that behaviors changed on a massive scale."
+        },
+        {
+          "tag": "be동사 + 형용사",
+          "words": [
+            "are",
+            "good"
+          ],
+          "sentence": "Most bacteria are good for us."
+        }
+      ]
+    },
+    {
+      "category": "조동사",
+      "count": 26453,
+      "percentage": 3.9555710404289774,
+      "unique_tags": 51,
+      "top_tags": [
+        [
+          "조동사 can ",
+          6439
+        ],
+        [
+          "조동사 will ",
+          4468
+        ],
+        [
+          "may 추측, 가능성",
+          2127
+        ]
+      ],
+      "examples": [
+        {
+          "tag": "조동사 can ",
+          "words": [
+            "can"
+          ],
+          "sentence": "You can appreciate this most clearly if you visualize the same command being made by the trainee to the supervisor."
+        },
+        {
+          "tag": "강조의 조동사 do",
+          "words": [
+            "do"
+          ],
+          "sentence": "They do, however, show great care for each other, since they view harmony as essential to relationship improvement."
+        },
+        {
+          "tag": "조동사 can ",
+          "words": [
+            "can"
+          ],
+          "sentence": "Some live in our digestive systems and help us digest our food, and some live in the environment and produce oxygen so that we can breathe and live on Earth."
+        }
+      ]
+    },
+    {
+      "category": "관계사",
+      "count": 23956,
+      "percentage": 3.5821895378413258,
+      "unique_tags": 52,
+      "top_tags": [
+        [
+          "주격 관계대명사 that 형용사역할",
+          5540
+        ],
+        [
+          "목적격 관계대명사 생략",
+          2881
+        ],
+        [
+          "주격 관계대명사 who 형용사역할",
+          2547
+        ]
+      ],
+      "examples": [
+        {
+          "tag": "주격 관계대명사 that 형용사역할",
+          "words": [
+            "that"
+          ],
+          "sentence": "This simple message has a content message that tells the trainee to see the supervisor after the meeting."
+        },
+        {
+          "tag": "주격 관계대명사 which 형용사역할",
+          "words": [
+            "which"
+          ],
+          "sentence": "New ideas, like mathematics, were shared between societies which allowed for all kinds of innovations and advancements."
+        },
+        {
+          "tag": "관계부사 선행사 생략",
+          "words": [
+            "is",
+            "when"
+          ],
+          "sentence": "This is when we need to see a doctor, who may prescribe medicines to control the infection."
+        }
+      ]
+    },
+    {
+      "category": "명사",
+      "count": 19292,
+      "percentage": 2.8847721056952267,
+      "unique_tags": 17,
+      "top_tags": [
+        [
+          "지시대명사 it",
+          9963
+        ],
+        [
+          "지시대명사 that, those",
+          5055
+        ],
+        [
+          "부정대명사 one",
+          1523
+        ]
+      ],
+      "examples": [
+        {
+          "tag": "지시대명사 that, those",
+          "words": [
+            "this"
+          ],
+          "sentence": "You can appreciate this most clearly if you visualize the same command being made by the trainee to the supervisor."
+        },
+        {
+          "tag": "지시대명사 that, those",
+          "words": [
+            "This"
+          ],
+          "sentence": "This is when we need to see a doctor, who may prescribe medicines to control the infection."
+        },
+        {
+          "tag": "지시대명사 that, those",
+          "words": [
+            "they"
+          ],
+          "sentence": "In contrast, shelving dark-colored products on top can create the illusion that they might fall over, which can be a source of anxiety for some shoppers."
+        }
+      ]
+    },
+    {
+      "category": "비교구문",
+      "count": 14796,
+      "percentage": 2.212476056182178,
+      "unique_tags": 26,
+      "top_tags": [
+        [
+          "비교급 ",
+          8056
+        ],
+        [
+          "최상급 ",
+          2937
+        ],
+        [
+          "비교급 강조",
+          1019
+        ]
+      ],
+      "examples": [
+        {
+          "tag": "비교급 ",
+          "words": [
+            "heavier"
+          ],
+          "sentence": "Carrying the same product in a black shopping bag, versus a white one, feels heavier."
+        },
+        {
+          "tag": "배수사 비교급 ",
+          "words": [
+            "twice",
+            "the",
+            "rate",
+            "of"
+          ],
+          "sentence": "Global warming has caused the Arctic to warm at twice the rate of the rest of the planet, resulting in extreme weather events."
+        },
+        {
+          "tag": "비교급 ",
+          "words": [
+            "warmer"
+          ],
+          "sentence": "Due to the warmer weather, animals from southern areas have begun migrating north, bringing with them pathogens and diseases previously unseen in the Arctic."
+        }
+      ]
+    },
+    {
+      "category": "부정",
+      "count": 12586,
+      "percentage": 1.882010248925986,
+      "unique_tags": 34,
+      "top_tags": [
+        [
+          "일반동사 부정",
+          3723
+        ],
+        [
+          "be동사 부정",
+          2990
+        ],
+        [
+          "조동사 부정",
+          1873
+        ]
+      ],
+      "examples": [
+        {
+          "tag": "일반동사 부정",
+          "words": [
+            "do",
+            "not",
+            "reach"
+          ],
+          "sentence": "In general, Asians do not reach out to strangers."
+        },
+        {
+          "tag": "be동사 부정",
+          "words": [
+            "was",
+            "n't"
+          ],
+          "sentence": "It wasn't until that minor detail was revealed─the world is round─that behaviors changed on a massive scale."
+        },
+        {
+          "tag": "일반동사 부정",
+          "words": [
+            "do",
+            "not",
+            "know"
+          ],
+          "sentence": "But some people do not know which clothes to buy."
+        }
+      ]
+    },
+    {
+      "category": "동사_태",
+      "count": 12023,
+      "percentage": 1.7978237106973727,
+      "unique_tags": 38,
+      "top_tags": [
+        [
+          "수동태",
+          7986
+        ],
+        [
+          "수동태 + to부정사 보어",
+          1073
+        ],
+        [
+          "수동태 + 명사 보어",
+          454
+        ]
+      ],
+      "examples": [
+        {
+          "tag": "수동태",
+          "words": [
+            "are",
+            "called"
+          ],
+          "sentence": "These medicines are called \"antibiotics,\" which means \"against the life of bacteria.\""
+        },
+        {
+          "tag": "수동태",
+          "words": [
+            "were",
+            "born"
+          ],
+          "sentence": "Knowing how to breathe when you were born is an implicit memory."
+        },
+        {
+          "tag": "수동태",
+          "words": [
+            "was",
+            "published"
+          ],
+          "sentence": "The report, which was published by the Arctic Council, consists of decades of biodiversity research and highlights the many changes in the region."
+        }
+      ]
+    },
+    {
+      "category": "의문사",
+      "count": 8375,
+      "percentage": 1.2523308306654326,
+      "unique_tags": 36,
+      "top_tags": [
+        [
+          "의문사 how — 목적어절",
+          1212
+        ],
+        [
+          "일반동사 의문문",
+          1054
+        ],
+        [
+          "의문사 what",
+          941
+        ]
+      ],
+      "examples": [
+        {
+          "tag": "조동사 의문문",
+          "words": [
+            "Would",
+            "you",
+            "send"
+          ],
+          "sentence": "Would you send us their financial standing?"
+        },
+        {
+          "tag": "의문사 who(m)",
+          "words": [
+            "who",
+            "who"
+          ],
+          "sentence": "Our backgrounds and circumstances may have influenced who we are, but we are responsible for who we become."
+        },
+        {
+          "tag": "의문사 how — 목적어절",
+          "words": [
+            "how"
+          ],
+          "sentence": "CEOs should then meet with this cabinet periodically to see how its perspective on key strategic issues differs from what they are hearing from the members of the senior management team."
+        }
+      ]
+    },
+    {
+      "category": "연결어",
+      "count": 8248,
+      "percentage": 1.2333402616511626,
+      "unique_tags": 41,
+      "top_tags": [
+        [
+          "연결어 however",
+          2740
+        ],
+        [
+          "연결어 for example",
+          1210
+        ],
+        [
+          "연결어 therefore",
+          484
+        ]
+      ],
+      "examples": [
+        {
+          "tag": "연결어 however",
+          "words": [
+            "however"
+          ],
+          "sentence": "They do, however, show great care for each other, since they view harmony as essential to relationship improvement."
+        },
+        {
+          "tag": "연결어 in contrast",
+          "words": [
+            "In",
+            "contrast"
+          ],
+          "sentence": "In contrast, shelving dark-colored products on top can create the illusion that they might fall over, which can be a source of anxiety for some shoppers."
+        },
+        {
+          "tag": "연결어 however",
+          "words": [
+            "However"
+          ],
+          "sentence": "However, due to the effects of climate change, rises in temperature have caused significant alterations to the ecosystem."
+        }
+      ]
+    },
+    {
+      "category": "가정법",
+      "count": 1136,
+      "percentage": 0.1698683968520515,
+      "unique_tags": 19,
+      "top_tags": [
+        [
+          "가정법 과거",
+          433
+        ],
+        [
+          "가정법 과거완료",
+          165
+        ],
+        [
+          "as if 가정법 과거",
+          146
+        ]
+      ],
+      "examples": [
+        {
+          "tag": "가정법 과거",
+          "words": [
+            "if",
+            "she",
+            "were",
+            "she",
+            "would",
+            "call"
+          ],
+          "sentence": "However, if she were anti-abortion, she would call those who share her views \"pro-life,\" for the same reason."
+        },
+        {
+          "tag": "I wish 가정법 과거",
+          "words": [
+            "wish",
+            "they",
+            "were"
+          ],
+          "sentence": "Grown-ups wish they were children to have no responsibilities."
+        },
+        {
+          "tag": "가정법 과거완료",
+          "words": [
+            "I",
+            "could",
+            "have",
+            "been",
+            "if",
+            "I",
+            "'d",
+            "had"
+          ],
+          "sentence": "They used to say I could have been a professional ballet dancer if I'd had the training."
+        }
+      ]
+    },
+    {
+      "category": "도치",
+      "count": 1061,
+      "percentage": 0.15865349389086852,
+      "unique_tags": 12,
+      "top_tags": [
+        [
+          "인용도치",
+          342
+        ],
+        [
+          "동작의 방향, 장소 부사[구] + v + s",
+          147
+        ],
+        [
+          "not only 도치",
+          94
+        ]
+      ],
+      "examples": [
+        {
+          "tag": "도치구문 only + v + s",
+          "words": [
+            "Only",
+            "could",
+            "Sara",
+            "breathe"
+          ],
+          "sentence": "Only then could Sara breathe freely again."
+        },
+        {
+          "tag": "not only 도치",
+          "words": [
+            "Not",
+            "only",
+            "do",
+            "mothers",
+            "threaten"
+          ],
+          "sentence": "Not only do mothers threaten their financial and emotional stability by opting out of their careers, they also put their children's future in jeopardy."
+        },
+        {
+          "tag": "형용사[분사] + v + s  ",
+          "words": [
+            "likely",
+            "is",
+            "the",
+            "idea"
+          ],
+          "sentence": "Just as likely is the idea that newborns come to associate gentle rocking with being fed."
+        }
+      ]
+    }
+  ],
+  "semantic_groups": {
+    "verb_related": [
+      "동사_시제",
+      "동사_태",
+      "조동사"
+    ],
+    "connecting_words": [
+      "접속사",
+      "연결어",
+      "관계사"
+    ],
+    "prepositions": [
+      "전치사"
+    ],
+    "sentence_structure": [
+      "문장형식",
+      "구문"
+    ],
+    "modification": [
+      "부정",
+      "비교구문"
+    ],
+    "special_constructions": [
+      "의문사",
+      "가정법",
+      "도치"
+    ],
+    "word_classes": [
+      "명사",
+      "준동사",
+      "구동사, 관용어"
+    ]
+  },
+  "merge_recommendations": {
+    "high_frequency": [
+      "전치사",
+      "동사_시제",
+      "접속사",
+      "준동사",
+      "구문"
+    ],
+    "medium_frequency": [
+      "구동사, 관용어",
+      "문장형식",
+      "조동사",
+      "관계사",
+      "명사",
+      "비교구문"
+    ],
+    "low_frequency": [
+      "부정",
+      "동사_태",
+      "의문사",
+      "연결어",
+      "가정법",
+      "도치"
+    ]
+  }
+}

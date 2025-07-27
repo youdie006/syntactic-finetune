@@ -1,0 +1,134 @@
+# Detailed Strategy - 태그를 더 세분화
+# 더 정확한 분석을 위해 카테고리를 세분화한 버전
+
+name: "detailed"
+version: "v3.0"
+description: "Detailed tag classification - splits categories into more specific subcategories"
+created_date: "2025-01-28"
+
+# 태그 분류 전략
+strategy_type: "expanded"
+
+# 태그 매핑 규칙 - 17개 카테고리를 25개로 확장
+tag_mapping:
+  syntax_groups:
+    # 동사 시제를 세분화
+    verb_present:
+      patterns: ["단순 현재", "현재"]
+      original_category: "동사_시제"
+    
+    verb_past:
+      patterns: ["단순 과거", "과거"]
+      original_category: "동사_시제"
+    
+    verb_perfect:
+      patterns: ["완료", "현재완료", "과거완료"]
+      original_category: "동사_시제"
+    
+    verb_progressive:
+      patterns: ["진행", "현재진행", "과거진행"]
+      original_category: "동사_시제"
+    
+    # 동사 태
+    verb_active:
+      patterns: ["능동"]
+      original_category: "동사_태"
+    
+    verb_passive:
+      patterns: ["수동"]
+      original_category: "동사_태"
+    
+    # 전치사 세분화
+    prep_location:
+      patterns: ["in", "on", "at", "under", "over"]
+      original_category: "전치사"
+    
+    prep_direction:
+      patterns: ["to", "from", "into", "onto"]
+      original_category: "전치사"
+    
+    prep_time:
+      patterns: ["before", "after", "during", "since"]
+      original_category: "전치사"
+    
+    prep_other:
+      patterns: ["by", "with", "for", "of", "about"]
+      original_category: "전치사"
+    
+    # 접속사 세분화
+    conj_coordinating:
+      patterns: ["등위접속사", "and", "or", "but"]
+      original_category: "접속사"
+    
+    conj_subordinating:
+      patterns: ["종속접속사", "because", "if", "when", "while"]
+      original_category: "접속사"
+    
+    # 준동사 세분화
+    infinitive:
+      patterns: ["to부정사", "부정사"]
+      original_category: "준동사"
+    
+    gerund:
+      patterns: ["동명사"]
+      original_category: "준동사"
+    
+    participle:
+      patterns: ["분사", "현재분사", "과거분사"]
+      original_category: "준동사"
+    
+    # 나머지 카테고리들 유지
+    sentence_structure:
+      - "구문"
+    
+    sentence_pattern:
+      - "문장형식"
+    
+    auxiliary:
+      - "조동사"
+    
+    phrasal_verb:
+      - "구동사, 관용어"
+    
+    relative:
+      - "관계사"
+    
+    noun:
+      - "명사"
+    
+    comparison:
+      - "비교구문"
+    
+    negation:
+      - "부정"
+    
+    interrogative:
+      - "의문사"
+    
+    connector:
+      - "연결어"
+    
+    subjunctive:
+      - "가정법"
+    
+    inversion:
+      - "도치"
+
+# 출력 형식
+output_format:
+  chunk_format: "[{detailed_category} {words}]"
+  role_format: "{detailed_category}:{specific_tag}"
+  separator: " | "
+
+# 품질 설정
+quality_filters:
+  min_sentence_length: 15  # 더 긴 문장만 사용
+  max_sentence_length: 400
+  min_tags_per_sentence: 2
+  max_tags_per_sentence: 40
+
+# 통계 정보
+statistics:
+  total_categories: 25
+  expansion_ratio: 1.47  # 17 -> 25 categories
+  target_distribution: "more_specific"
