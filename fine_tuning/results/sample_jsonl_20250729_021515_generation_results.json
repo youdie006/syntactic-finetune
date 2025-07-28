@@ -1,0 +1,92 @@
+{
+  "experiment_id": "sample_jsonl_20250729_021515",
+  "strategy_name": "dynamic_5cats_sample_jsonl",
+  "strategy_info": {
+    "created_date": "2025-07-29",
+    "description": "Dynamic strategy with 5 categories - auto-generated based on frequency and semantic similarity",
+    "merge_details": {
+      "description": "주요 의미 그룹 중심으로 5개 카테고리 생성",
+      "strategy": "aggressive"
+    },
+    "name": "dynamic_5cats_sample_jsonl",
+    "output_format": {
+      "chunk_format": "[{category} {words}]",
+      "include_dynamic_info": true,
+      "role_format": "{category}:{tag}",
+      "separator": " | "
+    },
+    "quality_filters": {
+      "balance_by_frequency": true,
+      "max_sentence_length": 500,
+      "max_tags_per_sentence": 50,
+      "min_sentence_length": 10,
+      "min_tags_per_sentence": 1
+    },
+    "statistics": {
+      "merge_groups": 5,
+      "original_categories": 17,
+      "target_distribution": "frequency_balanced",
+      "total_categories": 5
+    },
+    "strategy_type": "dynamic_merged",
+    "tag_mapping": {
+      "syntax_groups": {
+        "connectors": [
+          "접속사",
+          "연결어",
+          "관계사"
+        ],
+        "others": [
+          "명사",
+          "준동사",
+          "구동사, 관용어",
+          "부정",
+          "비교구문",
+          "의문사",
+          "연결어",
+          "가정법",
+          "도치"
+        ],
+        "prepositions": [
+          "전치사"
+        ],
+        "structures": [
+          "문장형식",
+          "구문"
+        ],
+        "verbs": [
+          "동사_시제",
+          "동사_태",
+          "조동사"
+        ]
+      }
+    },
+    "version": "dynamic_v1.0_20250729"
+  },
+  "dataset_stats": {
+    "total_examples": 102081,
+    "train_examples": 81664,
+    "valid_examples": 15312,
+    "test_examples": 5105,
+    "split_ratios": {
+      "train": 0.8,
+      "valid": 0.15,
+      "test": 0.04999999999999996
+    }
+  },
+  "token_stats": {
+    "total_examples": 102081,
+    "total_tokens": 18676598,
+    "user_tokens": 2849197,
+    "assistant_tokens": 15827401,
+    "avg_tokens_per_example": 182.9586112988705,
+    "avg_user_tokens": 27.911139193385644,
+    "avg_assistant_tokens": 155.04747210548487
+  },
+  "file_paths": {
+    "train": "data_experiments/sample_jsonl_20250729_021515/train.jsonl",
+    "valid": "data_experiments/sample_jsonl_20250729_021515/valid.jsonl",
+    "test": "data_experiments/sample_jsonl_20250729_021515/test_local.jsonl"
+  },
+  "quality_score": 100.0
+}

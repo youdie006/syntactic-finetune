@@ -1,0 +1,94 @@
+created_at: '2025-07-29T02:15:15.943708'
+dataset_params:
+  random_seed: 42
+  train_ratio: 0.8
+  valid_ratio: 0.15
+description: Dynamic experiment with 5 categories
+experiment_id: sample_jsonl_20250729_021515
+experiment_name: sample_jsonl
+files:
+  config_file: sample_jsonl_20250729_021515_config.yaml
+  dataset_dir: data_experiments/sample_jsonl_20250729_021515
+  results_file: results/experiments/sample_jsonl_20250729_021515_results.json
+last_updated: '2025-07-29T02:15:46.925813'
+metadata:
+  generated_at: '2025-07-29T02:15:46.925056'
+  generation_results:
+    dataset_stats:
+      split_ratios:
+        test: 0.04999999999999996
+        train: 0.8
+        valid: 0.15
+      test_examples: 5105
+      total_examples: 102081
+      train_examples: 81664
+      valid_examples: 15312
+    experiment_id: sample_jsonl_20250729_021515
+    file_paths:
+      test: data_experiments/sample_jsonl_20250729_021515/test_local.jsonl
+      train: data_experiments/sample_jsonl_20250729_021515/train.jsonl
+      valid: data_experiments/sample_jsonl_20250729_021515/valid.jsonl
+    quality_score: 100.0
+    strategy_info:
+      created_date: '2025-07-29'
+      description: Dynamic strategy with 5 categories - auto-generated based on frequency
+        and semantic similarity
+      merge_details:
+        description: "\uC8FC\uC694 \uC758\uBBF8 \uADF8\uB8F9 \uC911\uC2EC\uC73C\uB85C\
+          \ 5\uAC1C \uCE74\uD14C\uACE0\uB9AC \uC0DD\uC131"
+        strategy: aggressive
+      name: dynamic_5cats_sample_jsonl
+      output_format:
+        chunk_format: '[{category} {words}]'
+        include_dynamic_info: true
+        role_format: '{category}:{tag}'
+        separator: ' | '
+      quality_filters:
+        balance_by_frequency: true
+        max_sentence_length: 500
+        max_tags_per_sentence: 50
+        min_sentence_length: 10
+        min_tags_per_sentence: 1
+      statistics:
+        merge_groups: 5
+        original_categories: 17
+        target_distribution: frequency_balanced
+        total_categories: 5
+      strategy_type: dynamic_merged
+      tag_mapping:
+        syntax_groups:
+          connectors:
+          - "\uC811\uC18D\uC0AC"
+          - "\uC5F0\uACB0\uC5B4"
+          - "\uAD00\uACC4\uC0AC"
+          others:
+          - "\uBA85\uC0AC"
+          - "\uC900\uB3D9\uC0AC"
+          - "\uAD6C\uB3D9\uC0AC, \uAD00\uC6A9\uC5B4"
+          - "\uBD80\uC815"
+          - "\uBE44\uAD50\uAD6C\uBB38"
+          - "\uC758\uBB38\uC0AC"
+          - "\uC5F0\uACB0\uC5B4"
+          - "\uAC00\uC815\uBC95"
+          - "\uB3C4\uCE58"
+          prepositions:
+          - "\uC804\uCE58\uC0AC"
+          structures:
+          - "\uBB38\uC7A5\uD615\uC2DD"
+          - "\uAD6C\uBB38"
+          verbs:
+          - "\uB3D9\uC0AC_\uC2DC\uC81C"
+          - "\uB3D9\uC0AC_\uD0DC"
+          - "\uC870\uB3D9\uC0AC"
+      version: dynamic_v1.0_20250729
+    strategy_name: dynamic_5cats_sample_jsonl
+    token_stats:
+      assistant_tokens: 15827401
+      avg_assistant_tokens: 155.04747210548487
+      avg_tokens_per_example: 182.9586112988705
+      avg_user_tokens: 27.911139193385644
+      total_examples: 102081
+      total_tokens: 18676598
+      user_tokens: 2849197
+status: dataset_ready
+strategy_name: dynamic_5cats_sample_jsonl
