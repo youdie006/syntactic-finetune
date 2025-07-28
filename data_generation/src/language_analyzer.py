@@ -4,7 +4,8 @@ Language Analyzer - 영어 문장의 구문 분석을 수행
 """
 
 import spacy
-from typing import List, Dict, Any, Tuple
+import re
+from typing import List, Dict, Any, Tuple, Optional
 from dataclasses import dataclass
 
 
@@ -31,6 +32,12 @@ class ChunkInfo:
 
 
 @dataclass
+class SyntaxAnnotation:
+    """구문 주석 정보를 담는 데이터 클래스"""
+    chunk_text: str
+    korean_tag: str
+    
+@dataclass
 class AnalysisResult:
     """전체 분석 결과를 담는 데이터 클래스"""
     sentence: str
@@ -38,6 +45,8 @@ class AnalysisResult:
     chunks: List[ChunkInfo]
     pos_tags: List[str]
     grammatical_analysis: List[Dict[str, Any]]
+    syntax_annotations: List[SyntaxAnnotation] = None
+    translation: Optional[str] = None
 
 
 class LanguageAnalyzer:
@@ -54,17 +63,62 @@ class LanguageAnalyzer:
             print("python -m spacy download en_core_web_sm")
             raise
     
+    def parse_annotated_text(self, text: str) -> Tuple[str, List[SyntaxAnnotation], Optional[str]]:
+        """
+        주석이 포함된 텍스트를 파싱하여 영어 문장, 구문 주석, 번역을 분리
+        
+        형식: 
+        English sentence.
+        한국어 번역 (선택사항)
+        [chunk text -> korean tag]
+        [chunk text -> korean tag]
+        """
+        lines = text.strip().split('\n')
+        english_sentence = lines[0].strip()
+        korean_translation = None
+        annotation_start_idx = 1
+        
+        # 두 번째 줄이 한국어 번역인지 확인 (주석이 아닌 경우)
+        if len(lines) > 1 and not lines[1].strip().startswith('['):
+            korean_translation = lines[1].strip()
+            annotation_start_idx = 2
+        
+        annotations = []
+        for line in lines[annotation_start_idx:]:
+            line = line.strip()
+            if line.startswith('[') and line.endswith(']'):
+                # [chunk text -> korean tag] 형식 파싱
+                content = line[1:-1]  # 대괄호 제거
+                if ' -> ' in content:
+                    chunk_text, korean_tag = content.split(' -> ', 1)
+                    annotations.append(SyntaxAnnotation(
+                        chunk_text=chunk_text.strip(),
+                        korean_tag=korean_tag.strip()
+                    ))
+        
+        return english_sentence, annotations, korean_translation
+    
     def analyze(self, sentence: str) -> AnalysisResult:
         """
         문장을 분석하여 구문 정보 추출
         
         Args:
-            sentence: 분석할 영어 문장
+            sentence: 분석할 영어 문장 (주석 포함 가능)
             
         Returns:
             AnalysisResult: 분석 결과
         """
-        doc = self.nlp(sentence)
+        # 주석이 포함된 텍스트인지 확인
+        syntax_annotations = None
+        translation = None
+        if '\n[' in sentence:
+            # 주석 포함 형식
+            clean_sentence, syntax_annotations, translation = self.parse_annotated_text(sentence)
+        else:
+            # 순수 영어 문장
+            clean_sentence = sentence
+        
+        doc = self.nlp(clean_sentence)
         
         # 토큰 정보 추출
         tokens = self._extract_tokens(doc)
@@ -75,15 +129,20 @@ class LanguageAnalyzer:
         # POS 태그 추출
         pos_tags = [token.pos for token in tokens if not token.is_punct]
         
-        # 문법적 분석
-        grammatical_analysis = self._analyze_grammar(tokens, doc)
+        # 문법적 분석 (주석 있으면 주석만 사용, 없으면 자동 분석)
+        if syntax_annotations:
+            grammatical_analysis = self._create_korean_tags(syntax_annotations, tokens)
+        else:
+            grammatical_analysis = self._analyze_grammar(tokens, doc)
         
         return AnalysisResult(
-            sentence=sentence,
+            sentence=clean_sentence,
             tokens=tokens,
             chunks=chunks,
             pos_tags=pos_tags,
-            grammatical_analysis=grammatical_analysis
+            grammatical_analysis=grammatical_analysis,
+            syntax_annotations=syntax_annotations,
+            translation=translation
         )
     
     def _extract_tokens(self, doc) -> List[TokenInfo]:
@@ -308,6 +367,105 @@ class LanguageAnalyzer:
         }
         
         return relative_types.get(word, f'관계사 {word}')
+    
+    def _create_korean_tags(self, annotations: List[SyntaxAnnotation], tokens: List[TokenInfo]) -> List[Dict[str, Any]]:
+        """
+        구문 주석을 기반으로 한글 태그 정보 생성
+        """
+        korean_tags = []
+        
+        for annotation in annotations:
+            # 청크 텍스트에서 해당하는 토큰들 찾기 (순서 기반 매칭)
+            chunk_text = annotation.chunk_text.strip()
+            matched_tokens = self._find_matching_tokens(chunk_text, tokens)
+            
+            if matched_tokens:
+                # 카테고리 분류
+                category = self._classify_korean_tag_category(annotation.korean_tag)
+                
+                # 태그 정보 생성
+                tag_info = {
+                    'tag': annotation.korean_tag,
+                    'category': category,
+                    'words': [
+                        {
+                            'word': token.word,
+                            'word_index': token.index,
+                            'part_of_speech': token.pos
+                        } for token in matched_tokens
+                    ]
+                }
+                korean_tags.append(tag_info)
+        
+        return korean_tags
+    
+    def _find_matching_tokens(self, chunk_text: str, tokens: List[TokenInfo]) -> List[TokenInfo]:
+        """청크 텍스트에 해당하는 토큰들을 순서대로 찾기"""
+        chunk_words = chunk_text.split()
+        matched_tokens = []
+        
+        # 전체 문장에서 해당 청크 위치 찾기
+        sentence_words = [token.word for token in tokens if not token.is_punct or token.word in chunk_words]
+        
+        # 청크의 첫 단어부터 시작해서 연속된 토큰들 찾기
+        for start_idx in range(len(sentence_words)):
+            if len(chunk_words) == 0:
+                break
+                
+            # 청크의 첫 단어와 일치하는지 확인
+            if sentence_words[start_idx].lower() == chunk_words[0].lower():
+                potential_match = []
+                
+                # 연속된 단어들이 모두 일치하는지 확인
+                match_found = True
+                for i, chunk_word in enumerate(chunk_words):
+                    if start_idx + i >= len(sentence_words):
+                        match_found = False
+                        break
+                    if sentence_words[start_idx + i].lower() != chunk_word.lower():
+                        match_found = False
+                        break
+                    
+                    # 해당하는 토큰 찾기
+                    for token in tokens:
+                        if token.word == sentence_words[start_idx + i]:
+                            potential_match.append(token)
+                            break
+                
+                if match_found and len(potential_match) == len(chunk_words):
+                    matched_tokens = potential_match
+                    break
+        
+        return matched_tokens
+    
+    def _classify_korean_tag_category(self, korean_tag: str) -> str:
+        """
+        한글 태그를 카테고리로 분류
+        """
+        if '동사' in korean_tag or '시제' in korean_tag:
+            return '동사_시제'
+        elif '접속사' in korean_tag:
+            return '접속사'
+        elif '전치사' in korean_tag:
+            return '전치사'
+        elif '관계' in korean_tag:
+            return '관계사'
+        elif '부정' in korean_tag:
+            return '부정'
+        elif '동명사' in korean_tag or '부정사' in korean_tag:
+            return '준동사'
+        elif '분사' in korean_tag:
+            return '동사_시제'
+        elif '의문사' in korean_tag:
+            return '의문사'
+        elif '연결어' in korean_tag:
+            return '연결어'
+        elif '콜론' in korean_tag or '병렬' in korean_tag:
+            return '구문'
+        elif '명령문' in korean_tag or '가주어' in korean_tag:
+            return '문장형식'
+        else:
+            return '기타'
 
 
 if __name__ == "__main__":

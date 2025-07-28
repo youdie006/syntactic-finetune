@@ -48,6 +48,9 @@ fine_tuning/data_experiments/*/
 fine_tuning/results/*.json
 results/generated_csv/*.csv
 
+# Original patterns from proprietary data
+original_patterns.json
+
 # Claude settings
 .claude/
 

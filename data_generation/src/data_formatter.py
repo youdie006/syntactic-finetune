@@ -27,8 +27,10 @@ class DataFormatter:
         slash_data = []
         
         for chunk in analysis.chunks:
-            # 임시 번역 (실제로는 번역 서비스 연동 필요)
-            translation = f"번역_{chunk.start_idx}"  # 임시 값
+            # 청크별 번역 처리
+            # 실제 프로덕션에서는 번역 서비스를 연동해야 하지만,
+            # 현재는 전체 번역을 청크 텍스트에 맞춰 부분적으로 매핑
+            translation = self._get_chunk_translation(chunk, analysis.translation)
             
             chunk_data = {
                 'start_idx': chunk.start_idx,
@@ -40,6 +42,27 @@ class DataFormatter:
             slash_data.append(chunk_data)
             
         return slash_data
+    
+    def _get_chunk_translation(self, chunk: ChunkInfo, full_translation: str) -> str:
+        """청크에 해당하는 번역 부분 추출"""
+        if not full_translation:
+            return ""
+        
+        # 간단한 휴리스틱: 청크 텍스트 길이에 비례한 번역 부분 추출
+        # 실제로는 더 정교한 매핑이 필요함
+        chunk_words_ratio = len(chunk.words) / 20  # 대략적인 비율
+        
+        # 번역을 단어 단위로 분리
+        translation_words = full_translation.split()
+        
+        # 청크에 해당하는 대략적인 번역 부분 선택
+        start_idx = int(chunk.start_idx * chunk_words_ratio * len(translation_words))
+        end_idx = min(start_idx + len(chunk.words), len(translation_words))
+        
+        if start_idx < len(translation_words):
+            return ' '.join(translation_words[start_idx:end_idx])
+        else:
+            return ""
     
     def format_tag_info(self, analysis: AnalysisResult) -> List[Dict[str, Any]]:
         """
@@ -55,10 +78,14 @@ class DataFormatter:
         # 기본적으로 grammatical_analysis 결과를 사용
         tag_data = analysis.grammatical_analysis.copy()
         
-        # 추가적인 구문 분석 태그 생성
-        tag_data.extend(self._generate_additional_tags(analysis))
-        
-        return tag_data
+        # 주석이 있으면 주석만 사용, 없으면 추가 태그 생성
+        if hasattr(analysis, 'syntax_annotations') and analysis.syntax_annotations:
+            # 주석이 있는 경우: 제공된 한국어 태그만 사용
+            return tag_data
+        else:
+            # 주석이 없는 경우: 추가적인 구문 분석 태그 생성
+            tag_data.extend(self._generate_additional_tags(analysis))
+            return tag_data
     
     def _generate_additional_tags(self, analysis: AnalysisResult) -> List[Dict[str, Any]]:
         """추가적인 문법 태그 생성"""
