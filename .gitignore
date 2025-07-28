@@ -39,16 +39,20 @@ ENV/
 # Jupyter Notebook
 .ipynb_checkpoints
 
-# Data files (대용량 원본 데이터)
+# Data files - ignore large datasets and generated files
+*.csv
+*.jsonl
 data_raw/*.csv
+data_generation/output/*.csv
+fine_tuning/data_experiments/*/
+fine_tuning/results/*.json
+results/generated_csv/*.csv
 
-# Generated data (실험 데이터는 제외 - 용량이 클 수 있음)
-data_experiments/*/
-!data_experiments/.gitkeep
+# Claude settings
+.claude/
 
-# Results (결과 파일들)
-results/experiments/*.json
-!results/experiments/.gitkeep
+# Keep gitkeep files
+!*/.gitkeep
 
 # Logs
 logs/
