@@ -1,58 +1,63 @@
 # 🔗 Syntactic Fine-tuning Framework
 
-GPT-4o 구문 분석 파인튜닝을 위한 실험적 데이터셋 생성 프레임워크입니다. 사용자 정의 카테고리 수와 다양한 태그 분류 전략을 지원하여 최적의 파인튜닝 결과를 찾을 수 있습니다.
+영어 구문 분석을 위한 GPT-4o 파인튜닝 데이터 처리 프레임워크입니다. 원시 텍스트에서 CSV 생성부터 파인튜닝용 JSONL 변환까지의 프로세스를 처리합니다.
 
-## 🎯 프로젝트 목표
+## 🎯 프로젝트 개요
 
-20만 문장 코퍼스를 활용하여 GPT-4o를 구문 분석에 특화된 모델로 파인튜닝:
-- **입력**: 원문 문장
-- **출력**: chunks, POS tags, grammatical roles를 포함한 JSON
-- **핵심 기능**: 카테고리 수를 자유롭게 조정할 수 있는 실험적 데이터셋 생성
+두 가지 독립적이면서도 연결된 프로세스를 지원:
 
-## ✨ 주요 기능
+1. **데이터 생성**: 원시 텍스트 → 영어 구문 분석 CSV
+2. **파인튜닝 준비**: CSV → OpenAI JSONL 데이터셋
 
-### 🏷️ **동적 카테고리 전략**
-- **사용자 정의**: 2-17개 카테고리 수를 직접 지정
-- **지능적 병합**: 빈도와 의미적 유사성 기반 자동 카테고리 통합
-- **전략 자동 생성**: YAML 설정 없이 간단한 숫자 입력으로 전략 생성
+## 주요 기능
 
-### 🔄 **실험 관리 시스템**
-- **버전 관리**: 모든 실험의 히스토리와 상태 추적
-- **자동 파이프라인**: 전략 설정부터 데이터셋 생성까지 원클릭
-- **비교 분석**: 여러 전략 간 성능 비교 지원
+### 데이터 생성 시스템
+- spaCy 기반 영어 구문 분석
+- 기존 CSV 형식 호환
+- 배치 파일 처리
+- 데이터 품질 검증
 
-### 📊 **사전 정의된 전략**
-- **baseline** (17개): 원본 카테고리 그대로 유지
-- **simplified** (8개): 유사 카테고리를 넓은 그룹으로 통합
-- **detailed** (25개): 카테고리를 더 세분화하여 정밀 분석
-- **frequency_based** (19개): 빈도 가중 기반 균형잡힌 카테고리
+### 동적 카테고리 전략
+- 2-17개 카테고리 수 설정 가능
+- 빈도와 의미적 유사성 기반 카테고리 병합
+- 사용자 정의 전략 생성
+
+### 실험 관리 시스템
+- 실험 버전 관리 및 상태 추적
+- 자동화된 데이터셋 생성 파이프라인
+- 여러 전략 간 비교 분석
 
 ## 📁 프로젝트 구조
 
 ```
 Syntactic_finetune/
-├── 📄 run_experiment.py                      # 🎯 메인 실행 스크립트
-├── 📄 quality_check.py                       # 데이터 품질 검사
-├── 📄 requirements.txt                       # 의존성 패키지
-├── 📁 src/                                   # 핵심 소스 코드
-│   ├── experiment_manager.py                 # 실험 관리
-│   ├── preprocess_experimental.py           # 데이터 전처리
-│   ├── tag_strategy_engine.py              # 태그 전략 엔진
-│   ├── dynamic_strategy_generator.py        # 동적 전략 생성기
-│   └── utils.py                             # 유틸리티 함수
-├── 📁 configs/
-│   ├── 📁 tag_strategies/                    # 🏷️ 태그 전략 설정
-│   │   ├── v1_baseline.yaml
-│   │   ├── v2_simplified.yaml
-│   │   ├── v3_detailed.yaml
-│   │   └── v4_frequency_based.yaml
-│   └── 📁 experiments/                       # 실험 설정 (자동 생성)
-├── 📁 data_raw/
-│   └── legacy_sentence_analysis.csv         # 원본 데이터
-├── 📁 data_experiments/                      # 실험별 데이터 (자동 생성)
-├── 📁 results/experiments/                   # 실험 결과 (자동 생성)
-└── 📁 notebooks/
-    └── tag_inventory_fixed.ipynb            # 데이터 분석 노트북
+├── 📄 main_workflow.py                        # 🎯 통합 워크플로우 관리
+├── 📄 requirements.txt                        # 의존성 패키지
+├── 📁 data_generation/                        # 원시 텍스트 → CSV 변환
+│   ├── 📄 generate_csv.py                     # CSV 생성 CLI
+│   └── 📁 src/
+│       ├── csv_generator.py                   # 메인 생성기
+│       ├── language_analyzer.py               # 언어 분석 엔진
+│       └── data_formatter.py                  # 데이터 포맷터
+├── 📁 fine_tuning/                           # CSV → JSONL 변환
+│   ├── 📄 run_experiment.py                  # 실험 실행 스크립트
+│   ├── 📄 quality_check.py                   # 데이터 품질 검사
+│   ├── 📁 src/                               # 핵심 소스 코드
+│   │   ├── experiment_manager.py             # 실험 관리
+│   │   ├── preprocess_experimental.py        # 데이터 전처리
+│   │   ├── tag_strategy_engine.py           # 태그 전략 엔진
+│   │   ├── dynamic_strategy_generator.py     # 동적 전략 생성기
+│   │   └── utils.py                         # 유틸리티 함수
+│   ├── 📁 configs/
+│   │   ├── 📁 tag_strategies/                # 🏷️ 태그 전략 설정
+│   │   └── 📁 experiments/                   # 실험 설정 (자동 생성)
+│   ├── 📁 data_experiments/                  # 실험별 JSONL (자동 생성)
+│   └── 📁 results/                          # 실험 결과 (자동 생성)
+├── 📁 shared/                                # 공통 유틸리티
+│   └── common_utils.py                       # 공통 함수들
+├── 📁 data_raw/                             # 원본 데이터
+├── 📁 results/generated_csv/                 # 생성된 CSV 저장소
+└── 📁 notebooks/                            # 분석 노트북
 ```
 
 ## 🚀 빠른 시작
@@ -60,241 +65,224 @@ Syntactic_finetune/
 ### 1. 환경 설정
 
 ```bash
-# 가상환경 생성 및 활성화
+# 자동 환경 설정 (권장)
+./setup_env.sh        # Linux/Mac
+setup_env.bat          # Windows
+
+# 또는 수동 설정
 python3 -m venv venv
 source venv/bin/activate  # Linux/Mac
-# venv\Scripts\activate  # Windows
-
-# 의존성 설치
 pip install -r requirements.txt
+python -m spacy download en_core_web_sm
 ```
 
-### 2. 기본 사용법
-
-#### 🎯 사용자 정의 카테고리 수로 실험 (권장)
+### 2. 시스템 상태 확인
 
 ```bash
-# 5개 카테고리로 간단한 실험
-python3 run_experiment.py run --name simple_5 --categories 5
-
-# 10개 카테고리로 중간 복잡도 실험
-python3 run_experiment.py run --name medium_10 --categories 10
-
-# 15개 카테고리로 세밀한 실험
-python3 run_experiment.py run --name detailed_15 --categories 15
-```
-
-#### 📚 사전 정의된 전략으로 실험
-
-```bash
-# 기본 전략 (17개 카테고리)
-python3 run_experiment.py run --name baseline_exp --strategy baseline
-
-# 단순화 전략 (8개 카테고리)  
-python3 run_experiment.py run --name simple_exp --strategy simplified
-
-# 세분화 전략 (25개 카테고리)
-python3 run_experiment.py run --name detailed_exp --strategy detailed
-
-# 빈도 기반 전략 (19개 카테고리)
-python3 run_experiment.py run --name freq_exp --strategy frequency_based
-```
-
-### 3. 실험 관리
-
-```bash
-# 사용 가능한 전략 확인
-python3 run_experiment.py strategies
-
-# 모든 실험 목록 보기
-python3 run_experiment.py list
-
-# 여러 전략으로 비교 실험
-python3 run_experiment.py multi --base-name comparison --strategies baseline simplified detailed
+# 모든 의존성과 디렉토리 구조 확인
+python main_workflow.py status
 ```
 
 ## 💡 사용 예시
 
-### 파인튜닝 최적화 워크플로우
+### 통합 워크플로우
 
-1. **초기 실험**: 여러 카테고리 수로 테스트
+원시 텍스트에서 JSONL까지 한번에 처리:
+
 ```bash
-python3 run_experiment.py run --name test_5 --categories 5
-python3 run_experiment.py run --name test_10 --categories 10  
-python3 run_experiment.py run --name test_15 --categories 15
+# 텍스트 파일 → CSV → JSONL 한번에 처리
+python main_workflow.py full-pipeline input.txt --experiment-name my_experiment --categories 8
+
+# 결과:
+# - results/generated_csv/에 CSV 생성
+# - fine_tuning/data_experiments/에 JSONL 생성
 ```
 
-2. **성능 분석**: 각 실험의 결과를 보고 최적 카테고리 수 파악
+### 개별 프로세스 사용
 
-3. **세밀 조정**: 최적 범위에서 카테고리 수 미세 조정
+#### 1단계: 텍스트 → CSV 생성
+
 ```bash
-python3 run_experiment.py run --name optimal_8 --categories 8
-python3 run_experiment.py run --name optimal_9 --categories 9
+# 샘플 데이터 생성
+python data_generation/generate_csv.py sample -c 10
+
+# 텍스트 파일에서 CSV 생성
+python data_generation/generate_csv.py batch input.txt -o output.csv
+
+# 단일 문장 분석
+python data_generation/generate_csv.py single "This is a test sentence." -o result.csv
 ```
 
-### 출력 데이터 형식
+#### 2단계: CSV → JSONL 변환
 
-#### 입력 예시:
-```
-"While he was a true genius in music, he was not a great astrophysicist like Albert Einstein."
+```bash
+# 사용자 정의 카테고리로 실험
+python fine_tuning/run_experiment.py run --name exp1 --categories 8
+
+# 사전 정의된 전략으로 실험  
+python fine_tuning/run_experiment.py run --name exp2 --strategy baseline
+
+# 커스텀 CSV 사용
+python fine_tuning/run_experiment.py run --name exp3 --categories 10 --input my_data.csv
 ```
 
-#### 출력 예시 (5개 카테고리):
+## 고급 사용법
+
+### 데이터 분석 및 검증
+
+```bash
+# 데이터셋 통계 확인
+python main_workflow.py stats my_data.csv
+
+# CSV 형식 검증
+python main_workflow.py generate-csv input.txt --validate
+
+# 실험 품질 검사
+python fine_tuning/quality_check.py --experiment my_exp_20250729_123456
+```
+
+### 실험 관리
+
+```bash
+# 사용 가능한 전략 확인
+python fine_tuning/run_experiment.py strategies
+
+# 모든 실험 목록
+python fine_tuning/run_experiment.py list
+
+# 비교 실험 (여러 전략)
+python fine_tuning/run_experiment.py multi --base-name comparison --strategies baseline simplified detailed
+```
+
+## 📊 데이터 형식
+
+### 입력 (텍스트 파일)
+```
+The quick brown fox jumps over the lazy dog.
+Natural language processing is fascinating.
+Students who study hard will achieve success.
+```
+
+### 중간 (CSV)
+| sentence_id | sentence | translation | slash_translate | tag_info | syntax_info |
+|-------------|----------|-------------|-----------------|----------|-------------|
+| 12345... | The quick... | 빠른 갈색... | [{"start_idx": 0...}] | [{"tag": "단순 현재"...}] | [] |
+
+### 출력 (JSONL for OpenAI)
 ```json
 {
-  "chunks": "[connectors While] [verbs was was] [prepositions in] [others was not] [prepositions like]",
-  "pos_tags": "ADP VERB VERB ADP VERB ADV ADP", 
-  "grammatical_roles": "connectors:종속접속사 while 부사역할 — 양보 | verbs:단순 과거 | prepositions:전치사 in | others:be동사 부정 | prepositions:전치사 like"
+  "messages": [
+    {
+      "role": "user", 
+      "content": "Analyze this sentence syntactically: The quick brown fox..."
+    },
+    {
+      "role": "assistant",
+      "content": "{\"chunks\": \"[others The quick brown fox] [verbs jumps]...\", \"pos_tags\": \"DET ADJ ADJ NOUN VERB...\", \"grammatical_roles\": \"others:명사구 | verbs:단순 현재...\"}"
+    }
+  ]
 }
 ```
 
-## 🎛️ 고급 옵션
+## 카테고리 전략
 
-### 명령행 옵션
+### 사전 정의된 전략
+- **baseline** (17개): 원본 카테고리 그대로 유지
+- **simplified** (8개): 유사 카테고리를 넓은 그룹으로 통합  
+- **detailed** (25개): 카테고리를 더 세분화하여 정밀 분석
+- **frequency_based** (19개): 빈도 가중 기반 균형잡힌 카테고리
 
-```bash
-python3 run_experiment.py run \
-  --name my_experiment \
-  --categories 12 \
-  --description "커스텀 12카테고리 실험" \
-  --input data_raw/my_custom_data.csv \
-  --no-generate  # 데이터셋 생성 건너뛰기
-```
-
-### 데이터 품질 검사
-
-```bash
-# 실험 결과 품질 검사
-python3 quality_check.py --experiment my_experiment_20250728_123456
-
-# 전체 품질 리포트
-python3 quality_check.py --all
-```
-
-## 🔧 카테고리 병합 전략
-
-### 자동 병합 알고리즘
-
-- **2-5개 카테고리**: 극단적 병합 (주요 의미 그룹만)
-  - `prepositions`, `verbs`, `connectors`, `structures`, `others`
-
-- **6-11개 카테고리**: 중간 수준 병합 (의미적 유사성 기반)
-  - 고빈도 카테고리 유지 + 의미적 그룹화
-
-- **12-16개 카테고리**: 보수적 병합 (저빈도만 병합)  
-  - 대부분 카테고리 유지 + 저빈도 카테고리만 통합
-
-- **17개 카테고리**: 원본 그대로 유지
-
-### 빈도 기반 우선순위
-
-1. **고빈도** (유지): 전치사, 동사_시제, 접속사, 준동사, 구문
-2. **중빈도** (선택적): 구동사/관용어, 문장형식, 조동사, 관계사, 명사, 비교구문  
-3. **저빈도** (병합권장): 부정, 동사_태, 의문사, 연결어, 가정법, 도치
-
-## 📊 분석 도구
-
-### Jupyter 노트북 분석
-
-```bash
-# Jupyter 실행
-jupyter notebook notebooks/tag_inventory_fixed.ipynb
-```
-
-제공하는 분석:
-- 카테고리별 빈도 분포
-- 토큰 수 통계  
-- 데이터 품질 체크
-- 샘플 예시 검토
+### 동적 전략 (2-17개 카테고리)
+- **2-5개**: 극단적 병합 (주요 의미 그룹만)
+- **6-11개**: 중간 수준 병합 (의미적 유사성 기반)
+- **12-16개**: 보수적 병합 (저빈도만 병합)
+- **17개**: 원본 그대로 유지
 
 ## 🔗 OpenAI 파인튜닝 연동
 
-### 생성된 데이터셋 검증
-
+### 데이터셋 검증
 ```bash
-# 훈련 데이터 검증
-openai tools fine_tunes.prepare_data -f data_experiments/my_exp_*/train.jsonl
-
-# 검증 데이터 검증
-openai tools fine_tunes.prepare_data -f data_experiments/my_exp_*/valid.jsonl
+# OpenAI 도구로 검증
+openai tools fine_tunes.prepare_data -f fine_tuning/data_experiments/my_exp_*/train.jsonl
 ```
 
 ### 파인튜닝 시작
-
 ```bash
 # 파일 업로드
-openai files create --file data_experiments/my_exp_*/train.jsonl --purpose fine-tune
-openai files create --file data_experiments/my_exp_*/valid.jsonl --purpose fine-tune
+openai files create --file fine_tuning/data_experiments/my_exp_*/train.jsonl --purpose fine-tune
+openai files create --file fine_tuning/data_experiments/my_exp_*/valid.jsonl --purpose fine-tune
 
-# 파인튜닝 작업 시작
+# 파인튜닝 작업 시작  
 openai fine_tunes.create \
   --training_file file-abc123 \
   --validation_file file-def456 \
   --model gpt-4o-2024-08-06
 ```
 
-## 🛠️ 개발 및 확장
+## 확장 및 커스터마이징
 
-### 새로운 전략 추가
+### 새로운 언어 분석 기능 추가
 
-1. `configs/tag_strategies/` 에 YAML 파일 생성
+1. `data_generation/src/language_analyzer.py` 수정
+2. `data_generation/src/data_formatter.py`에서 포맷팅 로직 추가
+3. 자동으로 CSV 생성에 반영
+
+### 새로운 태그 전략 추가
+
+1. `fine_tuning/configs/tag_strategies/`에 YAML 파일 생성
 2. 전략 타입과 매핑 규칙 정의
 3. 자동으로 시스템에서 인식
 
-### 커스텀 데이터셋
+## 사용 권장사항
 
-```bash
-# 다른 CSV 파일 사용
-python3 run_experiment.py run \
-  --name custom_exp \
-  --categories 8 \
-  --input path/to/custom.csv
-```
+1. 8-12개 카테고리로 실험 시작
+2. 파인튜닝 결과에 따라 카테고리 수 조정
+3. 생성된 CSV의 품질 검증
+4. 대용량 데이터는 배치로 나누어 처리
 
-## 📈 성능 최적화 팁
-
-1. **시작점**: 8-12개 카테고리로 실험 시작
-2. **반복 개선**: 파인튜닝 결과에 따라 카테고리 수 조정
-3. **균형**: 너무 적으면 정보 손실, 너무 많으면 학습 어려움
-4. **빈도 고려**: 저빈도 카테고리는 병합 권장
-
-## 📋 문제 해결
+## 문제 해결
 
 ### 일반적인 문제
 
-1. **모듈 없음**: `pip install -r requirements.txt` 재실행
-2. **메모리 부족**: 더 작은 카테고리 수로 시작
-3. **데이터 형식 오류**: 원본 CSV 형식 확인
-4. **전략 없음**: `python3 run_experiment.py strategies`로 확인
+1. **spaCy 모델 없음**: `python -m spacy download en_core_web_sm`
+2. **메모리 부족**: 더 작은 배치 크기로 처리
+3. **CSV 형식 오류**: `python main_workflow.py stats your_file.csv`로 확인
+4. **의존성 문제**: `pip install -r requirements.txt` 재실행
 
 ### 디버깅
 
 ```bash
 # 상세 로그와 함께 실행
-python3 run_experiment.py run --name debug_test --categories 5 --description "디버그 테스트"
+python main_workflow.py full-pipeline input.txt --experiment-name debug_test
+
+# 시스템 상태 확인
+python main_workflow.py status
 ```
 
-## 📚 의존성
+## 의존성
 
+### 핵심 라이브러리
 - `pandas>=2.0.0` - 데이터 처리
-- `tiktoken>=0.5.0` - OpenAI 토큰 계산  
-- `openai>=1.0.0` - API 연동
+- `spacy>=3.6.0` - 자연어 처리
+- `tiktoken>=0.5.0` - OpenAI 토큰 계산
+- `pyyaml>=6.0` - 설정 파일 처리
+
+### 분석 도구
 - `jupyter>=1.0.0` - 분석 노트북
-- `matplotlib>=3.7.0` - 시각화
+- `matplotlib>=3.7.0` - 시각화  
 - `seaborn>=0.12.0` - 통계 시각화
-- `pyyaml>=5.3` - 설정 파일 처리
 
-## 🏁 다음 단계
+## 워크플로우
 
-성공적인 데이터셋 생성 후:
+데이터셋 생성 후 프로세스:
 
-1. **품질 검증**: 생성된 데이터의 품질과 일관성 확인
-2. **실험 비교**: 여러 카테고리 수로 파인튜닝 성능 비교  
-3. **최적화**: 최고 성능 카테고리 수 찾기
-4. **배포**: 최적 모델로 프로덕션 배포
+1. 생성된 데이터의 품질과 일관성 확인
+2. 여러 카테고리 수로 파인튜닝 성능 비교
+3. 최적 카테고리 수 결정
+4. 최종 모델 배포
 
 ---
 
-**📊 현재 상태**: 완전한 실험적 데이터셋 생성 프레임워크  
-**🎯 핵심 혁신**: 사용자 정의 카테고리 수 기반 동적 전략 생성  
-**🚀 다음 목표**: 파인튜닝 성능 자동 분석 및 최적 카테고리 수 추천 시스템
+**현재 상태**: 텍스트-투-JSONL 파이프라인 구현 완료  
+**프로젝트 범위**: 원시 텍스트부터 파인튜닝 데이터까지 처리  
+**향후 계획**: 파인튜닝 성능 분석 및 카테고리 수 최적화
